@@ -24,6 +24,12 @@ sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub
 sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
 ```
 
+# Gnome 
+```shell
+dconf dump /org/gnome/ > my-dconf
+dconf load /org/gnome/ < my-dconf
+```
+
 # copr
 
 ```shell
