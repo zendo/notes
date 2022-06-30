@@ -14,7 +14,7 @@ mirrors.sustech.edu.cn
 ```shell
 sudo zypper ar -f https://mirrors.bfsu.edu.cn/packman/suse/openSUSE_Tumbleweed/ packman
 sudo zypper dup --from packman --allow-vendor-change
-sudo zypper in x264 x265 faac faad2 lame libxine2 libxine2-codecs vlc-codecs vlc-codec-gstreamer ogmtools gstreamer-plugins-good-extra chromium-ffmpeg-extra
+sudo zypper in x264 x265 faac faad2 lame libxine2 libxine2-codecs vlc-codecs ogmtools gstreamer-plugins-good-extra chromium-ffmpeg-extra
 ```
 
 # Essential apps

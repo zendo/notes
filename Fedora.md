@@ -1,12 +1,13 @@
 # Debloat
 
 ```shell
-sudo dnf remove libreoffice-core yelp abrt gnome-user-docs ibus-libzhuyin ibus-hangul ibus-anthy 
+sudo dnf remove libreoffice-core yelp abrt gnome-user-docs gnome-boxes ibus-libzhuyin ibus-hangul ibus-anthy 
 ```
 
 # Essential apps
 
 ```shell
+sudo sed -i '$afastestmirror=1' /etc/dnf/dnf.conf
 sudo dnf install gnome-tweaks gnome-extensions-app rpmreaper p7zip-plugins
 ```
 
