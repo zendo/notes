@@ -14,7 +14,7 @@ mirrors.sustech.edu.cn
 ```shell
 sudo zypper ar -f https://mirrors.bfsu.edu.cn/packman/suse/openSUSE_Tumbleweed/ packman
 sudo zypper dup --from packman --allow-vendor-change
-sudo zypper in x264 x265 faac faad2 lame libxine2 libxine2-codecs vlc-codecs ogmtools gstreamer-plugins-good-extra chromium-ffmpeg-extra
+sudo zypper in x264 x265 faac faad2 lame libxine2 libxine2-codecs ogmtools gstreamer-plugins-good-extra chromium-ffmpeg-extra
 ```
 
 # Essential apps
@@ -27,7 +27,7 @@ patterns-devel-C-C++-devel_C_C++ libopenssl-devel
 
 ## Gnome
 - del: libreoffice evolution pidgin polari bijiben transmission yelp ibus-table fcitx opensuse-welcome PackageKit 
-- add: pipewire-pulseaudio hack terminus-bitmap-fonts 
+- add: wireplumber-audio hack terminus-bitmap-fonts 
 - in: noto-sans-sc-fonts firewall-config gnome-font-viewer
 
 ## KDE
