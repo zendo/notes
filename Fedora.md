@@ -48,7 +48,7 @@ sudo dnf group install --with-optional virtualization
 # SElinux
 
 ```shell
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+sed -i s/^SELINUX=.*$/SELINUX=disabled/ /etc/selinux/config
 sestatus
 vi /etc/selinux/config
 reboot
