@@ -17,6 +17,13 @@ sudo zypper dup --from packman --allow-vendor-change
 sudo zypper in x264 x265 faac faad2 lame libxine2 libxine2-codecs ogmtools gstreamer-plugins-good-extra chromium-ffmpeg-extra
 ```
 
+# flatpak
+
+```shell
+sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
+```
+
 # Essential apps
 
 opi vscode 
