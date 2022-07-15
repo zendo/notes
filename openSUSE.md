@@ -26,7 +26,7 @@ sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
 
 # Essential apps
 
-opi vscode 
+opi git flatpak vscode 
 
 patterns-devel-C-C++-devel_C_C++ libopenssl-devel
 
@@ -34,7 +34,7 @@ patterns-devel-C-C++-devel_C_C++ libopenssl-devel
 
 ## Gnome
 - del: libreoffice evolution pidgin polari bijiben transmission yelp ibus-table fcitx opensuse-welcome PackageKit 
-- add: wireplumber-audio hack terminus-bitmap-fonts 
+- add: hack terminus-bitmap-fonts 
 - in: noto-sans-sc-fonts firewall-config gnome-font-viewer
 
 ## KDE

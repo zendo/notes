@@ -8,7 +8,7 @@ sudo dnf remove libreoffice-core yelp abrt gnome-user-docs gnome-boxes ibus-libz
 
 ```shell
 sudo sed -i '$afastestmirror=1' /etc/dnf/dnf.conf
-sudo dnf install gnome-tweaks gnome-extensions-app rpmreaper p7zip-plugins
+sudo dnf install gnome-tweaks gnome-extensions-app dconf-editor rpmreaper p7zip-plugins jetbrains-mono-fonts 
 ```
 
 # rpmfusion
@@ -48,7 +48,7 @@ sudo dnf group install --with-optional virtualization
 # SElinux
 
 ```shell
-sed -i s/^SELINUX=.*$/SELINUX=disabled/ /etc/selinux/config
+sudo sed -i s/^SELINUX=.*$/SELINUX=disabled/ /etc/selinux/config
 sestatus
 vi /etc/selinux/config
 reboot
