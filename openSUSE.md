@@ -15,6 +15,7 @@ mirrors.sustech.edu.cn
 sudo zypper ar -f https://mirrors.bfsu.edu.cn/packman/suse/openSUSE_Tumbleweed/ packman
 sudo zypper dup --from packman --allow-vendor-change
 sudo zypper in x264 x265 faac faad2 lame libxine2 libxine2-codecs ogmtools gstreamer-plugins-good-extra chromium-ffmpeg-extra
+ffmpeg pipewire-aptx libavcodec-full vlc-codecs gstreamer-plugins-libav gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly gstreamer-plugins-bad-codecs gstreamer-plugins-ugly-codecs
 ```
 
 # flatpak
