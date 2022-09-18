@@ -1,7 +1,7 @@
 # Debloat
 
 ```shell
-sudo dnf remove libreoffice-core yelp abrt gnome-user-docs gnome-boxes ibus-libzhuyin ibus-hangul ibus-anthy 
+sudo dnf remove libreoffice-core yelp abrt gnome-user-docs gnome-boxes gnome-tour ibus-libzhuyin ibus-hangul ibus-anthy 
 ```
 
 # Essential apps
