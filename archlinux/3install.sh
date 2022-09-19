@@ -19,12 +19,12 @@ sudo systemctl enable gdm.service
 sudo tee -a /etc/pacman.conf <<EOF
 
 [archlinuxcn]
-Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux-cn/$arch
+Server = https://mirrors.bfsu.edu.cn/archlinuxcn/$arch
 Server = https://repo.archlinuxcn.org/\$arch
 EOF
 
 sudo pacman -Syy && sudo pacman -S --noconfirm archlinuxcn-keyring
-sudo pacman -S --noconfirm v2raya paru pamac
+sudo pacman -S --noconfirm v2raya paru pamac gnome-browser-connector
 echo "Arch apps Done!"
 sleep3
 
