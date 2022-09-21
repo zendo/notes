@@ -24,7 +24,7 @@ Server = https://repo.archlinuxcn.org/\$arch
 EOF
 
 sudo pacman -Syy && sudo pacman -S --noconfirm archlinuxcn-keyring
-sudo pacman -S --noconfirm v2raya paru pamac gnome-browser-connector
+sudo pacman -S --noconfirm v2raya paru pamac gnome-browser-connector ttf-jetbrains-mono
 echo "Arch apps Done!"
 sleep3
 
