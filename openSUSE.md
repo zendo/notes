@@ -14,8 +14,7 @@ mirrors.sustech.edu.cn
 ```shell
 sudo zypper ar -f https://mirrors.bfsu.edu.cn/packman/suse/openSUSE_Tumbleweed/ packman
 sudo zypper dup --from packman --allow-vendor-change
-sudo zypper in x264 x265 faac faad2 lame libxine2 libxine2-codecs ogmtools gstreamer-plugins-good-extra chromium-ffmpeg-extra
-ffmpeg pipewire-aptx vlc-codecs gstreamer-plugins-bad-codecs gstreamer-plugins-ugly-codecs
+sudo zypper in x264 x265 faac faad2 lame libxine2 libxine2-codecs ogmtools gstreamer-plugins-good-extra chromium-ffmpeg-extra pipewire-aptx vlc-codecs gstreamer-plugins-bad-codecs gstreamer-plugins-ugly-codecs
 ```
 
 # flatpak
@@ -27,7 +26,7 @@ sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
 
 # Essential apps
 
-opi git flatpak vscode 
+zypepr in opi git flatpak vscode 
 
 patterns-devel-C-C++-devel_C_C++ libopenssl-devel
 
