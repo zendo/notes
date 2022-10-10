@@ -1,5 +1,10 @@
 #! /usr/bin/env bash
 
+:<<!
+  vi /etc/resolv.conf
+  nameserver 114.114.114.114
+!
+
 # print command before executing, and exit when any command fails
 set -xe
 
@@ -8,7 +13,7 @@ set -xe
 export LANG=en_us
 
 ### basic env
-sudo pacman -S wayland libinput gnome gnome-tweaks seahorse gnome-power-manager firefox-i18n-zh-cn adobe-source-han-sans-cn-fonts ttf-hack a52dec libmad man-pages-zh_cn ibus-libpinyin v2ray
+sudo pacman -S wayland libinput gnome gnome-tweaks seahorse gnome-power-manager firefox-i18n-zh-cn adobe-source-han-sans-cn-fonts ttf-hack a52dec libmad man-pages-zh_cn ibus-libpinyin kitty
 echo "Done"
 sleep 3
 
@@ -19,7 +24,6 @@ sudo systemctl enable gdm.service
 sudo tee -a /etc/pacman.conf <<EOF
 
 [archlinuxcn]
-Server = https://mirrors.bfsu.edu.cn/archlinuxcn/$arch
 Server = https://repo.archlinuxcn.org/\$arch
 EOF
 

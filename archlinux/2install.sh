@@ -1,5 +1,11 @@
 #! /usr/bin/env bash
 
+:<<!
+  Intel: pacman -S mesa xf86-video-intel vulkan-intel intel-ucode
+  NVIDIA: pacman -S mesa nvidia xf86-video-nouveau nvidia-utils
+  AMD: pacman -S mesa xf86-video-ati xf86-video-amdgpu vulkan-radeon amd-ucode
+!
+
 # print command before executing, and exit when any command fails
 set -xe
 
@@ -32,7 +38,7 @@ sleep 3
 
 
 ### Necessary Apps
-pacman -S dhcpcd netctl iw dialog wpa_supplicant networkmanager bind-tools net-tools dosfstools ntfs-3g btrfs-progs os-prober grub intel-ucode sudo vi nano wget curl expac
+pacman -S dhcpcd netctl iw dialog wpa_supplicant networkmanager bind-tools net-tools dosfstools ntfs-3g btrfs-progs os-prober grub sudo vi nano wget curl expac
 systemctl enable dhcpcd.service
 systemctl enable NetworkManager.service
 systemctl enable systemd-timesyncd.service
@@ -52,4 +58,4 @@ useradd -m -G wheel iab
 echo '%wheel ALL=(ALL)ALL' >> /etc/sudoers
 echo "$username:$password" | chpasswd
 
-echo "All Done"
+echo "Next: exit ; reboot"
