@@ -1,10 +1,5 @@
 #! /usr/bin/env bash
 
-:<<!
-  vi /etc/resolv.conf
-  nameserver 114.114.114.114
-!
-
 # print command before executing, and exit when any command fails
 set -xe
 
@@ -28,7 +23,7 @@ Server = https://repo.archlinuxcn.org/\$arch
 EOF
 
 sudo pacman -Syy && sudo pacman -S --noconfirm archlinuxcn-keyring
-sudo pacman -S --noconfirm v2raya paru pamac gnome-browser-connector ttf-jetbrains-mono
+sudo pacman -S --noconfirm v2raya paru pamac gnome-browser-connector ttf-jetbrains-mono emacs-native-comp-pgtk-git
 echo "Arch apps Done!"
 sleep3
 

@@ -1,13 +1,22 @@
 #! /usr/bin/env bash
 
 :<<!
-  station wlan0 get-networks
-  station wlan0 connect SSID
-  mkfs.fat -F32
-  mkfs.btrfs
-  mkdir /boot/efi
-  mount
-  genfstab -U /mnt /mnt/boot/efi >> /mnt/etc/fstab
+简单中文安装脚本：
+https://github.com/bianjp/archlinux-installer
+
+复杂通用型安装脚本：
+https://github.com/helmuthdu/aui
+https://gitee.com/auroot/arch_wiki
+
+station wlan0 get-networks
+station wlan0 connect SSID
+
+mkfs.fat -F32
+mkfs.btrfs
+mkdir /boot/efi
+mount
+
+genfstab -U /mnt /mnt/boot/efi >> /mnt/etc/fstab
 !
 
 # print command before executing, and exit when any command fails
