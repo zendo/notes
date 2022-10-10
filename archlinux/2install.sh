@@ -55,7 +55,13 @@ sleep 3
 ### User
 echo "root:$password" | chpasswd
 useradd -m -G wheel iab
-echo '%wheel ALL=(ALL)ALL' >> /etc/sudoers
 echo "$username:$password" | chpasswd
+
+tee -a /etc/sudoers <<EOF
+
+%wheel ALL=(ALL:ALL) ALL
+%wheel ALL=(ALL:ALL) NOPASSWD: ALL
+%sudo  ALL=(ALL:ALL) ALL
+EOF
 
 echo "Next: exit ; reboot"
