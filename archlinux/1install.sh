@@ -8,8 +8,11 @@ https://github.com/bianjp/archlinux-installer
 https://github.com/helmuthdu/aui
 https://gitee.com/auroot/arch_wiki
 
+iwd
 station wlan0 get-networks
 station wlan0 connect SSID
+
+sudo nmtui
 
 mkfs.fat -F32
 mkfs.btrfs
@@ -34,6 +37,6 @@ sleep 3
 
 cp -r notes/archlinux /mnt/archscripts
 
-genfstab -U /mnt/boot/efi /mnt >> /mnt/etc/fstab
+genfstab -U /mnt /mnt/boot/efi >> /mnt/etc/fstab
 
 arch-chroot /mnt
