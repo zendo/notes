@@ -13,10 +13,8 @@ station wlan0 connect SSID
 
 mkfs.fat -F32
 mkfs.btrfs
-mkdir /boot/efi
+mkdir -p /mnt/boot/efi
 mount
-
-genfstab -U /mnt /mnt/boot/efi >> /mnt/etc/fstab
 !
 
 # print command before executing, and exit when any command fails
@@ -32,4 +30,5 @@ sed -i "1i Server = https://mirrors.sustech.edu.cn/archlinux/\$repo/os/\$arch" /
 ### BootStrap
 pacstrap /mnt base base-devel linux-zen linux-firmware efibootmgr bash-completion git
 
+echo "genfstab -U /mnt/boot/efi /mnt >> /mnt/etc/fstab"
 echo "Next: cp -r archlinux /mnt/ ; arch-chroot /mnt"

@@ -23,7 +23,7 @@ Server = https://repo.archlinuxcn.org/\$arch
 EOF
 
 sudo pacman -Syy && sudo pacman -S --noconfirm archlinuxcn-keyring
-sudo pacman -S --noconfirm v2raya paru pamac gnome-browser-connector ttf-jetbrains-mono emacs-native-comp-pgtk-git
+sudo pacman -S --noconfirm v2raya paru pamac gnome-browser-connector ttf-jetbrains-mono
 echo "Arch apps Done!"
 sleep3
 
@@ -33,3 +33,4 @@ sleep3
 
 # No bell beep sound
 gsettings set org.gnome.desktop.wm.preferences audible-bell false
+gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:swapcaps']"
