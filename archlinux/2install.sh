@@ -1,16 +1,16 @@
 #! /usr/bin/env bash
 
 :<<!
-  Intel: pacman -S mesa xf86-video-intel vulkan-intel intel-ucode
-  NVIDIA: pacman -S mesa nvidia xf86-video-nouveau nvidia-utils
-  AMD: pacman -S mesa xf86-video-ati xf86-video-amdgpu vulkan-radeon amd-ucode
+  Intel: pacman -S xf86-video-intel vulkan-intel intel-ucode
+  NVIDIA: pacman -S nvidia xf86-video-nouveau nvidia-utils
+  AMD: pacman -S amd-ucode
 !
 
 # print command before executing, and exit when any command fails
 set -xe
 
 hostname=arch
-username=iab
+username=zendo
 password=123
 
 ### Time Zone
@@ -38,7 +38,7 @@ sleep 3
 
 
 ### Necessary Apps
-pacman -S dhcpcd netctl iw dialog wpa_supplicant networkmanager bind-tools net-tools dosfstools ntfs-3g btrfs-progs os-prober grub sudo vi nano wget curl expac
+pacman -S mesa dhcpcd netctl iw dialog wpa_supplicant networkmanager bind-tools net-tools dosfstools ntfs-3g btrfs-progs os-prober grub sudo vi nano wget curl expac
 systemctl enable dhcpcd.service
 systemctl enable NetworkManager.service
 systemctl enable systemd-timesyncd.service
@@ -54,7 +54,7 @@ sleep 3
 
 ### User
 echo "root:$password" | chpasswd
-useradd -m -G wheel iab
+useradd -m -G wheel $username
 echo "$username:$password" | chpasswd
 
 tee -a /etc/sudoers <<EOF
@@ -64,4 +64,4 @@ tee -a /etc/sudoers <<EOF
 %sudo  ALL=(ALL:ALL) ALL
 EOF
 
-echo "Next: exit ; reboot"
+echo "Next: exit then reboot"

@@ -3,7 +3,6 @@
 # print command before executing, and exit when any command fails
 set -xe
 
-
 ### switch en temp
 export LANG=en_us
 
@@ -14,7 +13,6 @@ sleep 3
 
 sudo systemctl enable gdm.service
 
-
 ### arch-cn
 sudo tee -a /etc/pacman.conf <<EOF
 
@@ -23,10 +21,9 @@ Server = https://repo.archlinuxcn.org/\$arch
 EOF
 
 sudo pacman -Syy && sudo pacman -S --noconfirm archlinuxcn-keyring
-sudo pacman -S --noconfirm v2raya paru pamac gnome-browser-connector ttf-jetbrains-mono
+sudo pacman -S --noconfirm paru pamac gnome-browser-connector ttf-jetbrains-mono
 echo "Arch apps Done!"
 sleep3
-
 
 
 ### Gnome
