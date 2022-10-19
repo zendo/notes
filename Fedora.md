@@ -27,6 +27,9 @@ sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
 
 # Gnome 
 ```shell
+# force using en directories
+LC_ALL=C xdg-user-dirs-update --force
+
 dconf dump /org/gnome/ > my-dconf
 dconf load /org/gnome/ < my-dconf
 ```
