@@ -10,7 +10,7 @@
 set -xe
 
 hostname=arch
-username=zendo
+username=iab
 password=123
 
 ### Time Zone

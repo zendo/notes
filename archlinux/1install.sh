@@ -31,7 +31,7 @@ sed -i "1i Server = https://mirror.sjtu.edu.cn/archlinux/\$repo/os/\$arch" /etc/
 sed -i "1i Server = https://mirrors.sustech.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
 
 ### BootStrap
-pacstrap /mnt base base-devel linux-zen linux-firmware efibootmgr bash-completion git
+pacstrap /mnt base base-devel linux linux-firmware efibootmgr bash-completion git
 echo "Pacstrap Done!"
 sleep 3
 
