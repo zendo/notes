@@ -15,17 +15,20 @@ hwclock --systohc
 echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
 echo 'zh_CN.UTF-8 UTF-8' >> /etc/locale.gen
 locale-gen
+
 echo 'LANG=zh_CN.UTF-8' > /etc/locale.conf
-export LANG=en_US.UTF-8  #先在终端用英文
+export LANG=en_US.UTF-8  # Using en temp
 echo "Localization Done!"
 sleep 3
 
 
 ### Host
 echo $hostname > /etc/hostname
-echo '127.0.0.1  localhost
+tee -a /etc/hosts <<EOF
+127.0.0.1  localhost
 ::1  localhost
-127.0.1.1  arch' > /etc/hosts
+127.0.1.1  $hostname
+EOF
 echo "Host Done!"
 sleep 3
 
