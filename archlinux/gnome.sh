@@ -3,7 +3,10 @@
 # print command before executing, and exit when any command fails
 set -xe
 
-sudo pacman -S gnome gnome-tweaks seahorse gnome-power-manager ibus-libpinyin
+### switch en temp
+export LANG=en_us
+
+sudo pacman -S gnome gnome-tweaks seahorse gnome-power-manager gnome-browser-connector ibus-libpinyin
 echo "Done"
 sleep 3
 

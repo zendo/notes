@@ -1,4 +1,6 @@
 #! /usr/bin/env bash
+
+#################################
 :<<!
 https://arch.icekylin.online/
 
@@ -20,14 +22,15 @@ mkfs.btrfs
 mount
 mkdir -p /mnt/boot/efi
 !
+#################################
 
 # print command before executing, and exit when any command fails
 set -xe
 
-### Update the system clock
+### NTP
 timedatectl set-ntp true
 
-### Mirror
+### Mirrors
 sed -i "1i Server = https://mirror.sjtu.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
 sed -i "1i Server = https://mirrors.sustech.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
 
@@ -39,12 +42,14 @@ sed -i "1i Server = https://mirrors.sustech.edu.cn/archlinux/\$repo/os/\$arch" /
   AMD: pacman -S amd-ucode
 !
 
-pacstrap /mnt base base-devel linux linux-firmware amd-ucode efibootmgr bash-completion git
+pacstrap /mnt base base-devel linux linux-firmware efibootmgr bash-completion git amd-ucode
 echo "Pacstrap Done!"
 sleep 3
 
-cp -r notes /mnt
-
+### fstab
 genfstab -U /mnt /mnt/boot/efi >> /mnt/etc/fstab
+
+
+cp -r notes /mnt
 
 arch-chroot /mnt

@@ -3,7 +3,10 @@
 # print command before executing, and exit when any command fails
 set -xe
 
-sudo pacman -S plasma-meta plasma-wayland-session xdg-desktop-portal konsole dolphin ark gwenview fcitx5-im fcitx5-chinese-addons
+### switch en temp
+export LANG=en_us
+
+sudo pacman -S plasma plasma-wayland-session xdg-desktop-portal konsole dolphin ark gwenview fcitx5-im fcitx5-chinese-addons
 echo "Done"
 sleep 3
 
