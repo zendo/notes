@@ -1,6 +1,7 @@
 #! /usr/bin/env bash
-
 :<<!
+https://arch.icekylin.online/
+
 简单中文安装脚本：
 https://github.com/bianjp/archlinux-installer
 
