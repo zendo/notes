@@ -31,12 +31,19 @@ timedatectl set-ntp true
 sed -i "1i Server = https://mirror.sjtu.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
 sed -i "1i Server = https://mirrors.sustech.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
 
+
 ### BootStrap
-pacstrap /mnt base base-devel linux linux-firmware efibootmgr bash-completion git
+:<<!
+  Intel: pacman -S xf86-video-intel vulkan-intel intel-ucode
+  NVIDIA: pacman -S nvidia xf86-video-nouveau nvidia-utils
+  AMD: pacman -S amd-ucode
+!
+
+pacstrap /mnt base base-devel linux linux-firmware amd-ucode efibootmgr bash-completion git
 echo "Pacstrap Done!"
 sleep 3
 
-cp -r notes/archlinux /mnt/archscripts
+cp -r notes /mnt
 
 genfstab -U /mnt /mnt/boot/efi >> /mnt/etc/fstab
 

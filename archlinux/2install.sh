@@ -1,11 +1,5 @@
 #! /usr/bin/env bash
 
-:<<!
-  Intel: pacman -S xf86-video-intel vulkan-intel intel-ucode
-  NVIDIA: pacman -S nvidia xf86-video-nouveau nvidia-utils
-  AMD: pacman -S amd-ucode
-!
-
 # print command before executing, and exit when any command fails
 set -xe
 
@@ -16,7 +10,6 @@ password=123
 ### Time Zone
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 hwclock --systohc
-
 
 ### Localization
 echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
