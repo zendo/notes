@@ -16,7 +16,7 @@ echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
 echo 'zh_CN.UTF-8 UTF-8' >> /etc/locale.gen
 locale-gen
 
-echo 'LANG=zh_CN.UTF-8' > /etc/locale.conf
+localectl set-locale LANG=zh_CN.UTF-8
 export LANG=en_US.UTF-8  # Using en temp
 echo "Localization Done!"
 sleep 3
@@ -60,4 +60,4 @@ tee -a /etc/sudoers <<EOF
 %sudo  ALL=(ALL:ALL) ALL
 EOF
 
-echo "Next: exit then reboot"
+echo "All Done! exit and reboot"
