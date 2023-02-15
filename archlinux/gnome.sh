@@ -19,4 +19,4 @@ gsettings set org.gnome.desktop.peripherals.touchpad click-method "'areas'"
 gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:swapcaps']"
 
 echo "Gnome Done!"
-sleep3
+sleep 3

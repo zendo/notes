@@ -11,7 +11,7 @@ https://github.com/bianjp/archlinux-installer
 https://github.com/helmuthdu/aui
 https://gitee.com/auroot/arch_wiki
 
-iwd
+iwctl:
 station wlan0 get-networks
 station wlan0 connect SSID
 

@@ -22,4 +22,4 @@ sudo pacman -Syy && sudo pacman -S --noconfirm archlinuxcn-keyring
 sudo pacman -S --noconfirm paru pamac ttf-jetbrains-mono
 
 echo "Arch apps Done!"
-sleep3
+sleep 3

@@ -16,7 +16,7 @@ echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
 echo 'zh_CN.UTF-8 UTF-8' >> /etc/locale.gen
 locale-gen
 
-localectl set-locale LANG=zh_CN.UTF-8
+echo 'LANG=zh_CN.UTF-8' > /etc/locale.conf
 export LANG=en_US.UTF-8  # Using en temp
 echo "Localization Done!"
 sleep 3

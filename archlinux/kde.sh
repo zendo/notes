@@ -25,4 +25,4 @@ cd ~ || exit
 mkdir Desktop Documents Downloads Music Pictures Videos
 
 echo "KDE Done!"
-sleep3
+sleep 3
