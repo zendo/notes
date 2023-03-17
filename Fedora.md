@@ -1,14 +1,14 @@
 # Debloat
 
 ```shell
-sudo dnf remove libreoffice-core yelp abrt gnome-user-docs gnome-boxes gnome-tour ibus-libzhuyin ibus-hangul ibus-anthy 
+sudo dnf remove libreoffice-core yelp abrt gnome-user-docs gnome-boxes gnome-tour ibus-libzhuyin ibus-hangul ibus-anthy
 ```
 
 # Essential apps
 
 ```shell
 sudo sed -i '$afastestmirror=1' /etc/dnf/dnf.conf
-sudo dnf install gnome-tweaks gnome-extensions-app dconf-editor rpmreaper p7zip-plugins jetbrains-mono-fonts 
+sudo dnf install gnome-tweaks gnome-extensions-app dconf-editor rpmreaper p7zip-plugins jetbrains-mono-fonts
 ```
 
 # rpmfusion
@@ -50,10 +50,8 @@ sudo dnf group install --with-optional virtualization
 # RIME
 
 ``` shell
-curl -fsSL https://git.io/rime-install | rime_dir="$HOME/.local/share/fcitx5/rime"
-bash -s -- rime-install
-hosxy/rime-aurora-pinyin
-BlindingDark/rime-easy-en:customize:schema=aurora_pinyin
+curl -fsSL https://git.io/rime-install | bash -s -- rime-install iDvel/rime-ice:others/recipes/full
+curl -fsSL https://git.io/rime-install | rime_dir="$HOME/.local/share/fcitx5/rime" bash -s -- rime-install iDvel/rime-ice:others/recipes/full
 ```
 
 # SElinux
