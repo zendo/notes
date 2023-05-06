@@ -42,7 +42,6 @@ patterns-devel-C-C++-devel_C_C++ libopenssl-devel
 - del: plasma5-pk-updates konversation ibus fcitx- skanlite opensuse-welcome
 - add: pipewire-pulseaudio gnome-color-manager colord-kde
 
-curl https://gitlab.com/cscs/transfuse/-/raw/master/transfuse.sh -o ~/.local/bin/kde-backup ; chmod +x $_
 
 # zypper usage
 - zypper rm -u xxx 卸载软件和其依赖
@@ -55,8 +54,6 @@ curl https://gitlab.com/cscs/transfuse/-/raw/master/transfuse.sh -o ~/.local/bin
 - zypper in -t pattern lamp_server
 
 # Links
-
-<https://opensuse.github.io/openSUSE-docs-revamped-temp/index.html>
 
 <https://cnzhx.net/blog/index-of-notes-on-t470s-and-opensuse/>
 
