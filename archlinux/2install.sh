@@ -68,7 +68,7 @@ EOF
             echo "root:$password" | chpasswd
             useradd -m -G wheel $username
             echo "$username:$password" | chpasswd
-            echo "Add user"
+            echo "Now exit chroot and reboot!"
             ;;
 
         "Quit")

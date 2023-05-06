@@ -28,11 +28,8 @@ do
         "User Nopasswd")
             sudo tee -a /etc/sudoers <<EOF
 %wheel  ALL=(ALL:ALL)   NOPASSWD:SETENV: ALL
-# %wheel ALL=(ALL:ALL) ALL
-# %wheel ALL=(ALL:ALL) NOPASSWD: ALL
-# %sudo  ALL=(ALL:ALL) ALL
 EOF
-            echo "Now exit chroot and reboot!"
+            echo "User no need passwd now"
             ;;
 
         "Fcitx5 env")
@@ -43,7 +40,7 @@ QT_IM_MODULE=fcitx5
 XMODIFIERS=\@im=fcitx5
 SDL_IM_MODULE=fcitx
 EOF
-            echo "Setting done"
+            echo "Fcitx environment done"
             ;;
 
         "Quit")
