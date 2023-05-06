@@ -39,9 +39,9 @@ do
         "Hosts")
             echo $hostname > /etc/hostname
             tee -a /etc/hosts <<EOF
-            127.0.0.1  localhost
-            ::1  localhost
-            127.0.1.1  $hostname
+127.0.0.1  localhost
+::1  localhost
+127.0.1.1  $hostname
 EOF
             echo "Hosts done"
             ;;

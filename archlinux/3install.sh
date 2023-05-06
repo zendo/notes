@@ -19,8 +19,8 @@ do
     case $opt in
         "Archlinuxcn repo")
             sudo tee -a /etc/pacman.conf <<EOF
-            [archlinuxcn]
-            Server = https://repo.archlinuxcn.org/\$arch
+[archlinuxcn]
+Server = https://repo.archlinuxcn.org/\$arch
 EOF
             export LANG=en_US.UTF-8  # Using en temp
             echo "Archlinuxcn done"
