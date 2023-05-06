@@ -33,7 +33,7 @@ do
             locale-gen
 
             echo 'LANG=zh_CN.UTF-8' > /etc/locale.conf
-            export LANG=en_US.UTF-8  # Using en temp
+            export LANG=en_US.UTF-8  # Using en env
             echo "Localization done"
             ;;
 
@@ -59,7 +59,7 @@ EOF
             ;;
 
         "Grub")
-            grub-install
+            grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
             grub-mkconfig -o /boot/grub/grub.cfg
             sleep 3
             echo "Grub done"
@@ -78,7 +78,7 @@ EOF
             %wheel ALL=(ALL:ALL) NOPASSWD: ALL
             %sudo  ALL=(ALL:ALL) ALL
 EOF
-            echo "User Nopasswd"
+            echo "Now exit chroot and reboot!"
             ;;
 
         "Quit")

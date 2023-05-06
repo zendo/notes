@@ -9,6 +9,9 @@ options=(
     "KDE"
     "Gnome en directories"
     "Flatpak"
+    "AMD"
+    "Intel"
+    "NVIDIA"
     "Quit"
 )
 
@@ -21,6 +24,7 @@ do
             [archlinuxcn]
             Server = https://repo.archlinuxcn.org/\$arch
 EOF
+            export LANG=en_US.UTF-8  # Using en temp
             echo "Archlinuxcn done"
             ;;
 
@@ -33,7 +37,7 @@ EOF
             echo "Apps done"
             ;;
 
-        "Gnoome")
+        "Gnome")
             sudo pacman -S --noconfirm gnome gnome-tweaks seahorse \
                  gnome-browser-connector gnome-power-manager ibus-libpinyin
 
@@ -78,6 +82,21 @@ EOF
             sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
             sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
             echo "Flatpak done"
+            ;;
+
+        "AMD")
+            sudo pacman -S --noconfirm amd-ucode
+            echo "AMD done"
+            ;;
+
+        "Intel")
+            sudo pacman -S --noconfirm xf86-video-intel vulkan-intel intel-ucode
+            echo "intel done"
+            ;;
+
+        "NVIDIA")
+            sudo pacman -S --noconfirm nvidia xf86-video-nouveau nvidia-utils
+            echo "AMD done"
             ;;
 
         "Quit")

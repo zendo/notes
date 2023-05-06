@@ -36,12 +36,6 @@ sed -i "1i Server = https://mirrors.sustech.edu.cn/archlinux/\$repo/os/\$arch" /
 
 
 ### BootStrap
-:<<!
-  Intel: pacman -S xf86-video-intel vulkan-intel intel-ucode
-  NVIDIA: pacman -S nvidia xf86-video-nouveau nvidia-utils
-  AMD: pacman -S amd-ucode
-!
-
 pacstrap /mnt base base-devel linux linux-firmware efibootmgr bash-completion git amd-ucode
 echo "Pacstrap Done!"
 sleep 3
