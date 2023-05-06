@@ -13,14 +13,15 @@ if [ "$(rpm -q dialog 2>/dev/null | grep -c "is not installed")" -eq 1 ]; then
 fi
 
 OPTIONS=(1 "Debloat System"
-         2 "Speeding Up DNFy"
+         2 "Speeding Up DNF"
          3 "Enabling RPM Fusion"
          4 "Installing Essential Software"
          5 "Enabling Flatpak"
          6 "Using en directories in Gnome"
          7 "Installing Extras"
          8 "Install Nvidia - Install akmod nvidia drivers"
-     9 "Quit")
+         9 "Disable SElinux - Reboot need"
+     10 "Quit")
 
 while [ "$CHOICE -ne 4" ]; do
     CHOICE=$(dialog --clear \
@@ -31,12 +32,11 @@ while [ "$CHOICE -ne 4" ]; do
                 $HEIGHT $WIDTH $CHOICE_HEIGHT \
                 "${OPTIONS[@]}" \
                 2>&1 >/dev/tty)
-
     clear
 
     case $CHOICE in
         1)  echo "Debloat System"
-            sudo dnf remove libreoffice-core yelp abrt \
+            sudo dnf remove -y libreoffice-core yelp abrt \
                  gnome-user-docs gnome-boxes gnome-tour \
                  ibus-libzhuyin ibus-hangul ibus-anthy
             notify-send "Debloat System" --expire-time=10
@@ -51,7 +51,7 @@ while [ "$CHOICE -ne 4" ]; do
 
         3)  echo "Enabling RPM Fusion"
             # sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-            sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+            sudo dnf install -y https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
             sudo dnf install -y @multimedia
             # sudo dnf install -y rpmfusion-free-release-tainted
             # sudo dnf install -y dnf-plugins-core
@@ -77,18 +77,11 @@ while [ "$CHOICE -ne 4" ]; do
             ;;
 
         7)  echo "Installing Extras"
-            sudo dnf groupupdate -y sound-and-video
-            sudo dnf install -y libdvdcss
-            sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,ugly-\*,base} gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel ffmpeg gstreamer-ffmpeg
-            sudo dnf install -y lame\* --exclude=lame-devel
-            sudo dnf group upgrade -y --with-optional Multimedia
-        sudo dnf copr enable peterwu/iosevka -y
-            sudo -s dnf -y copr enable dawid/better_fonts
-            sudo dnf update -y
-            sudo -s dnf install -y fontconfig-font-replacements
-            sudo -s dnf install -y fontconfig-enhanced-defaults
-        sudo dnf update -y
-        sudo dnf install -y iosevka-term-fonts jetbrains-mono-fonts-all gnome-shell-theme-flat-remix flat-remix-icon-theme flat-remix-theme terminus-fonts terminus-fonts-console google-noto-fonts-common mscore-fonts-all fira-code-fonts
+            # sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,ugly-\*,base} gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel ffmpeg gstreamer-ffmpeg
+            # sudo dnf install -y lame\* --exclude=lame-devel
+            sudo dnf copr enable zhullyb/v2rayA -y
+            sudo dnf group install -y --with-optional virtualization
+            sudo dnf group install -y @"C Development Tools and Libraries"
             notify-send "All done" --expire-time=10
             ;;
 
@@ -97,7 +90,13 @@ while [ "$CHOICE -ne 4" ]; do
             notify-send "All done" --expire-time=10
             ;;
 
-        9)
+        9)  echo "Disable SElinux"
+            sudo sed -i s/^SELINUX=.*$/SELINUX=disabled/ /etc/selinux/config
+sestatus
+            notify-send "All done" --expire-time=10
+            ;;
+
+        10)
           exit 0
           ;;
     esac
