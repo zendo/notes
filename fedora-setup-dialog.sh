@@ -15,12 +15,10 @@ OPTIONS=(1 "Debloat System"
          2 "Speeding Up DNF"
          3 "Enabling RPM Fusion"
          4 "Installing Essential Software"
-         5 "Enabling Flatpak"
-         6 "Using en directories in Gnome"
-         7 "Installing Extras"
-         8 "Install Nvidia - Install akmod nvidia drivers"
-         9 "Disable SElinux - Reboot need"
-         10 "Quit")
+         5 "Installing Extras"
+         6 "Install Nvidia - Install akmod nvidia drivers"
+         7 "Disable SElinux - Reboot need"
+         8 "Quit")
 
 while [ "$CHOICE -ne 4" ]; do
     CHOICE=$(dialog --clear \
@@ -59,18 +57,7 @@ while [ "$CHOICE -ne 4" ]; do
             notify-send "Software has been installed" --expire-time=10
             ;;
 
-        5)  echo "Enabling Flatpak"
-            sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-            sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
-            notify-send "Flatpak has now been enabled" --expire-time=10
-            ;;
-
-        6)  echo "Using en directories in Gnome"
-            LC_ALL=C xdg-user-dirs-update --force
-            notify-send "Done" --expire-time=10
-            ;;
-
-        7)  echo "Installing Extras"
+        5)  echo "Installing Extras"
             # sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,ugly-\*,base} gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel ffmpeg gstreamer-ffmpeg
             # sudo dnf install -y lame\* --exclude=lame-devel
             sudo dnf copr enable zhullyb/v2rayA -y
@@ -80,18 +67,18 @@ while [ "$CHOICE -ne 4" ]; do
             notify-send "All done" --expire-time=10
             ;;
 
-        8)  echo "Installing Nvidia Driver Akmod-Nvidia"
+        6)  echo "Installing Nvidia Driver Akmod-Nvidia"
             sudo dnf install -y akmod-nvidia
             notify-send "All done" --expire-time=10
             ;;
 
-        9)  echo "Disable SElinux"
+        7)  echo "Disable SElinux"
             sudo sed -i s/^SELINUX=.*$/SELINUX=disabled/ /etc/selinux/config
             sestatus
             notify-send "All done" --expire-time=10
             ;;
 
-        10)
+        8)
             exit 0
             ;;
     esac

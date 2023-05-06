@@ -13,7 +13,6 @@ options=(
     "Core apps"
     "Grub"
     "Add User"
-    "User Nopasswd"
     "Quit"
 )
 
@@ -70,15 +69,6 @@ EOF
             useradd -m -G wheel $username
             echo "$username:$password" | chpasswd
             echo "Add user"
-            ;;
-
-        "User Nopasswd")
-            tee -a /etc/sudoers <<EOF
-            %wheel ALL=(ALL:ALL) ALL
-            %wheel ALL=(ALL:ALL) NOPASSWD: ALL
-            %sudo  ALL=(ALL:ALL) ALL
-EOF
-            echo "Now exit chroot and reboot!"
             ;;
 
         "Quit")

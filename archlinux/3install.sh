@@ -7,8 +7,6 @@ options=(
     "Apps"
     "Gnome"
     "KDE"
-    "Gnome en directories"
-    "Flatpak"
     "AMD"
     "Intel"
     "NVIDIA"
@@ -33,7 +31,7 @@ EOF
             sudo pacman -S --noconfirm wayland libinput a52dec libmad \
                  adobe-source-han-sans-cn-fonts ttf-hack ttf-jetbrains-mono \
                  man-pages-zh_cn firefox-i18n-zh-cn \
-                 kitty fish paru pamac
+                 kitty fish paru pamac flatpak
             echo "Apps done"
             ;;
 
@@ -43,11 +41,11 @@ EOF
 
             sudo systemctl enable gdm.service
 
-            # docnf
-            gsettings set org.gnome.desktop.wm.preferences audible-bell false
-            gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-            gsettings set org.gnome.desktop.peripherals.touchpad click-method "'areas'"
-            gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:swapcaps']"
+            # docnf instead of home-manager
+            # gsettings set org.gnome.desktop.wm.preferences audible-bell false
+            # gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+            # gsettings set org.gnome.desktop.peripherals.touchpad click-method "'areas'"
+            # gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:swapcaps']"
             echo "Gnome done"
             ;;
 
@@ -58,30 +56,10 @@ EOF
 
             sudo systemctl enable sddm.service
 
-            sudo tee -a /etc/environment <<EOF
-            INPUT_METHOD=fcitx5
-            GTK_IM_MODULE=fcitx5
-            QT_IM_MODULE=fcitx5
-            XMODIFIERS=\@im=fcitx5
-            SDL_IM_MODULE=fcitx
-EOF
-
             cd ~ || exit
             mkdir Desktop Documents Downloads Music Pictures Videos
 
             echo "Apps and services done"
-            ;;
-
-        "Gnome en directories")
-            LC_ALL=C xdg-user-dirs-update --force
-            echo "Setting done"
-            ;;
-
-        "Flatpak")
-            sudo pacman -S --noconfirm flatpak
-            sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-            sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
-            echo "Flatpak done"
             ;;
 
         "AMD")

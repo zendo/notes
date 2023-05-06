@@ -11,7 +11,6 @@ options=(
     "Development softwares"
     "Gnome"
     "KDE"
-    "Flatpak"
     "Quit"
 )
 
@@ -60,7 +59,6 @@ do
         "Gnome")
             sudo zypper rm -y libreoffice evolution pidgin polari bijiben transmission yelp ibus-table fcitx opensuse-welcome PackageKit
             sudo zypper in -y gnome-font-viewer
-            LC_ALL=C xdg-user-dirs-update --force
             echo "Gnome desktop"
             ;;
 
@@ -68,12 +66,6 @@ do
             sudo zypper rm -y plasma5-pk-updates konversation ibus skanlite opensuse-welcome
             sudo zypper in -y gnome-color-manager colord-kde
             echo "KDE desktop"
-            ;;
-
-        "Flatpak")
-            sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-            sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
-            echo "Flatpak add repo and change to sjtu"
             ;;
 
         "Quit")
