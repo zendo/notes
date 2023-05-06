@@ -20,7 +20,7 @@ sudo nmtui
 mkfs.fat -F32
 mkfs.btrfs
 mount
-mkdir -p /mnt/boot/efi
+mkdir -p /mnt/efi
 !
 #################################
 
@@ -47,7 +47,7 @@ echo "Pacstrap Done!"
 sleep 3
 
 ### fstab
-genfstab -U /mnt /mnt/boot/efi >> /mnt/etc/fstab
+genfstab -U /mnt /mnt/efi >> /mnt/etc/fstab
 
 
 cp -r notes /mnt

@@ -1,63 +1,90 @@
 #! /usr/bin/env bash
 
-# print command before executing, and exit when any command fails
-set -xe
-
 hostname=arch
 username=iab
 password=123
 
-### Time Zone
-ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-hwclock --systohc
+PS3='Please enter your choice: '
 
-### Localization
-echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
-echo 'zh_CN.UTF-8 UTF-8' >> /etc/locale.gen
-locale-gen
+options=(
+    "Timezone"
+    "Localization"
+    "Hosts"
+    "Core apps"
+    "Grub"
+    "Add User"
+    "User Nopasswd"
+    "Quit"
+)
 
-echo 'LANG=zh_CN.UTF-8' > /etc/locale.conf
-export LANG=en_US.UTF-8  # Using en temp
-echo "Localization Done!"
-sleep 3
+select opt in "${options[@]}"
 
+do
+    case $opt in
+        "Timezone")
+            ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+            hwclock --systohc
+            echo "Timezone done"
+            ;;
 
-### Host
-echo $hostname > /etc/hostname
-tee -a /etc/hosts <<EOF
-127.0.0.1  localhost
-::1  localhost
-127.0.1.1  $hostname
+        "Localization")
+            echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
+            echo 'zh_CN.UTF-8 UTF-8' >> /etc/locale.gen
+            locale-gen
+
+            echo 'LANG=zh_CN.UTF-8' > /etc/locale.conf
+            export LANG=en_US.UTF-8  # Using en temp
+            echo "Localization done"
+            ;;
+
+        "Hosts")
+            echo $hostname > /etc/hostname
+            tee -a /etc/hosts <<EOF
+            127.0.0.1  localhost
+            ::1  localhost
+            127.0.1.1  $hostname
 EOF
-echo "Host Done!"
-sleep 3
+            echo "Hosts done"
+            ;;
 
+        "Core apps")
+            pacman -S mesa dhcpcd netctl iw dialog wpa_supplicant \
+                   networkmanager bind-tools net-tools dosfstools \
+                   ntfs-3g btrfs-progs os-prober grub sudo vi nano \
+                   wget curl expac
+            systemctl enable dhcpcd.service
+            systemctl enable NetworkManager.service
+            systemctl enable systemd-timesyncd.service
+            echo "Apps and services done"
+            ;;
 
-### Necessary Apps
-pacman -S mesa dhcpcd netctl iw dialog wpa_supplicant networkmanager bind-tools net-tools dosfstools ntfs-3g btrfs-progs os-prober grub sudo vi nano wget curl expac
-systemctl enable dhcpcd.service
-systemctl enable NetworkManager.service
-systemctl enable systemd-timesyncd.service
-echo "Wait a seconds"
-sleep 3
+        "Grub")
+            grub-install
+            grub-mkconfig -o /boot/grub/grub.cfg
+            sleep 3
+            echo "Grub done"
+            ;;
 
+        "Add User")
+            echo "root:$password" | chpasswd
+            useradd -m -G wheel $username
+            echo "$username:$password" | chpasswd
+            echo "Add user"
+            ;;
 
-### grub
-grub-install
-grub-mkconfig -o /boot/grub/grub.cfg
-sleep 3
-
-
-### User
-echo "root:$password" | chpasswd
-useradd -m -G wheel $username
-echo "$username:$password" | chpasswd
-
-tee -a /etc/sudoers <<EOF
-
-%wheel ALL=(ALL:ALL) ALL
-%wheel ALL=(ALL:ALL) NOPASSWD: ALL
-%sudo  ALL=(ALL:ALL) ALL
+        "User Nopasswd")
+            tee -a /etc/sudoers <<EOF
+            %wheel ALL=(ALL:ALL) ALL
+            %wheel ALL=(ALL:ALL) NOPASSWD: ALL
+            %sudo  ALL=(ALL:ALL) ALL
 EOF
+            echo "User Nopasswd"
+            ;;
 
-echo "All Done! exit and reboot"
+        "Quit")
+            break
+            ;;
+
+        *) echo "invalid option $REPLY";;
+    esac
+done
