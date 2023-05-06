@@ -47,13 +47,6 @@ sudo dnf group install --with-optional virtualization
 @"C Development Tools and Libraries"
 ```
 
-# RIME
-
-``` shell
-curl -fsSL https://git.io/rime-install | bash -s -- rime-install iDvel/rime-ice:others/recipes/full
-curl -fsSL https://git.io/rime-install | rime_dir="$HOME/.local/share/fcitx5/rime" bash -s -- rime-install iDvel/rime-ice:others/recipes/full
-```
-
 # SElinux
 
 ```shell
