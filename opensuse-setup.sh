@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 PS3='Please enter your choice: '
 
 options=(
@@ -22,14 +21,14 @@ do
     case $opt in
         "zypper onlyRequires")
             sudo bash -c "echo 'solver.onlyRequires = true' >> /etc/zypp/zypp.conf"
-            echo "set zypper install only require"
+            echo "set zypper only require"
             ;;
 
-        "Mirror SJTU")
+        "Mirror sjtu")
             sudo zypper mr -da
             sudo zypper ar -fcg https://mirror.sjtu.edu.cn/opensuse/tumbleweed/repo/oss/ sjtu-oss
             sudo zypper ar -fcg https://mirror.sjtu.edu.cn/opensuse/tumbleweed/repo/non-oss/ sjtu-non-oss
-            echo "Mirror set to sjtu"
+            echo "Mirror change to sjtu"
             ;;
 
         "Packman repo")
@@ -47,8 +46,8 @@ do
             ;;
 
         "Essential softwares")
-            sudo zypper in -y opi git flatpak vscode \
-                 hack terminus-bitmap-fonts noto-sans-sc-fonts \
+            sudo zypper in -y opi git flatpak \
+                 hack-fonts terminus-bitmap-fonts noto-sans-sc-fonts \
                  firewall-config
             echo "Install essential softwares"
             ;;
@@ -61,11 +60,13 @@ do
         "Gnome")
             sudo zypper rm -y libreoffice evolution pidgin polari bijiben transmission yelp ibus-table fcitx opensuse-welcome PackageKit
             sudo zypper in -y gnome-font-viewer
+            LC_ALL=C xdg-user-dirs-update --force
             echo "Gnome desktop"
             ;;
 
         "KDE")
-            sudo
+            sudo zypper rm -y plasma5-pk-updates konversation ibus skanlite opensuse-welcome
+            sudo zypper in -y gnome-color-manager colord-kde
             echo "KDE desktop"
             ;;
 
