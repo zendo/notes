@@ -4,13 +4,6 @@
 :<<!
 https://arch.icekylin.online/
 
-简单中文安装脚本：
-https://github.com/bianjp/archlinux-installer
-
-复杂通用型安装脚本：
-https://github.com/helmuthdu/aui
-https://gitee.com/auroot/arch_wiki
-
 iwctl:
 station wlan0 get-networks
 station wlan0 connect SSID

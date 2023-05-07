@@ -59,22 +59,22 @@ EOF
             cd ~ || exit
             mkdir Desktop Documents Downloads Music Pictures Videos
 
-            echo "Apps and services done"
+            echo "KDE done"
             ;;
 
         "AMD")
-            sudo pacman -S --noconfirm amd-ucode
+            sudo pacman -S --noconfirm amd-ucode mesa lib32-mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon
             echo "AMD done"
             ;;
 
         "Intel")
-            sudo pacman -S --noconfirm xf86-video-intel vulkan-intel intel-ucode
+            sudo pacman -S --noconfirm intel-ucode mesa lib32-mesa vulkan-intel lib32-vulkan-intel
             echo "intel done"
             ;;
 
         "NVIDIA")
-            sudo pacman -S --noconfirm nvidia xf86-video-nouveau nvidia-utils
-            echo "AMD done"
+            sudo pacman -S --noconfirm nvidia-open nvidia-settings lib32-nvidia-utils
+            echo "NVIDIA done"
             ;;
 
         "Quit")
