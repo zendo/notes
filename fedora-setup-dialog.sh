@@ -54,7 +54,7 @@ while [ "$CHOICE -ne 4" ]; do
         4)  echo "Installing Essential Software"
             sudo dnf install -y gnome-tweaks gnome-extensions-app dconf-editor \
                  jetbrains-mono-fonts fira-code-fonts \
-                 p7zip-plugins rpmreaper
+                 zsh p7zip-plugins rpmreaper
             notify-send "Software has been installed" --expire-time=10
             ;;
 
