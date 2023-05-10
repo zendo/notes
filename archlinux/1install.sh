@@ -13,7 +13,7 @@ sudo nmtui
 mkfs.fat -F32
 mkfs.btrfs
 mount
-mkdir -p /mnt/efi
+mkdir /mnt/efi
 !
 #################################
 

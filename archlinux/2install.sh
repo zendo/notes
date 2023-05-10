@@ -68,6 +68,9 @@ EOF
             echo "root:$password" | chpasswd
             useradd -m -G wheel $username
             echo "$username:$password" | chpasswd
+            tee -a /etc/sudoers <<EOF
+%wheel  ALL=(ALL:ALL)   NOPASSWD:SETENV: ALL
+EOF
             echo "Now exit chroot and reboot!"
             ;;
 

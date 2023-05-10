@@ -18,11 +18,11 @@ select opt in "${options[@]}"
 do
     case $opt in
         "Archlinuxcn repo")
+            export LANG=en_US.UTF-8  # Using en temp
             sudo tee -a /etc/pacman.conf <<EOF
 [archlinuxcn]
 Server = https://repo.archlinuxcn.org/\$arch
 EOF
-            export LANG=en_US.UTF-8  # Using en temp
             echo "Archlinuxcn done"
             ;;
 
@@ -36,7 +36,7 @@ EOF
             ;;
 
         "Gnome")
-            sudo pacman -S --noconfirm gnome gnome-tweaks seahorse \
+            sudo pacman -S gnome gnome-tweaks seahorse \
                  gnome-browser-connector gnome-power-manager ibus-libpinyin
 
             sudo systemctl enable gdm.service
@@ -50,7 +50,7 @@ EOF
             ;;
 
         "KDE")
-            sudo pacman -S --noconfirm plasma plasma-wayland-session \
+            sudo pacman -S plasma plasma-wayland-session \
                  konsole dolphin ark gwenview xdg-desktop-portal \
                  fcitx5-im fcitx5-chinese-addons
 

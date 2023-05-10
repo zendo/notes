@@ -5,7 +5,7 @@ PS3='Please enter your choice: '
 options=(
     "Flatpak"
     "Gnome en directories"
-    "User Nopasswd"
+    "User Nopasswd noneed arch"
     "Fcitx5 env"
     "Quit"
 )
@@ -25,7 +25,7 @@ do
             echo "Setting done"
             ;;
 
-        "User Nopasswd")
+        "User Nopasswd noneed arch")
             sudo tee -a /etc/sudoers <<EOF
 %wheel  ALL=(ALL:ALL)   NOPASSWD:SETENV: ALL
 EOF
