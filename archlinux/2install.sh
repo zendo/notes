@@ -50,7 +50,7 @@ EOF
             pacman -S mesa dhcpcd netctl iw dialog wpa_supplicant \
                    networkmanager bind-tools net-tools dosfstools \
                    ntfs-3g btrfs-progs os-prober grub sudo vi nano \
-                   wget curl expac
+                   wget curl expac zsh
             systemctl enable dhcpcd.service
             systemctl enable NetworkManager.service
             systemctl enable systemd-timesyncd.service
