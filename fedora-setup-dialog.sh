@@ -67,6 +67,8 @@ while [ "$CHOICE -ne 4" ]; do
 
         6)  echo "Installing Extras"
             sudo dnf copr enable zhullyb/v2rayA -y
+            sudo dnf copr enable timlau/yumex-ng -y
+            sudo dnf install yumex -y
             sudo dnf group install -y --with-optional virtualization
             sudo dnf group install -y @"C Development Tools and Libraries"
             notify-send "All done" --expire-time=10
