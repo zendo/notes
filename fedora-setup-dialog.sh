@@ -7,9 +7,16 @@ TITLE="Please Make a selection"
 MENU="Please Choose one of the following options:"
 
 #Check to see if Dialog is installed, if not install it
-if [ "$(rpm -q dialog 2>/dev/null | grep -c "is not installed")" -eq 1 ]; then
-    sudo dnf install -y dialog
-fi
+# if [ "$(rpm -q dialog 2>/dev/null | grep -c "is not installed")" -eq 1 ]; then
+#     sudo dnf install -y dialog
+# fi
+
+#Check to see if Dialog is installed, if not show error
+command_exist() { command -v "$1" >/dev/null 2>&1; }
+for dep in dialog curl; do command_exist "$dep" || {
+    echo "Error: $dep is not installed." >&2
+    exit 1
+}; done
 
 OPTIONS=(1 "Debloat System"
          2 "Speeding Up DNF"
