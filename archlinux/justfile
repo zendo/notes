@@ -1,0 +1,12 @@
+set shell := ["bash", "-uc"]
+
+user := `loginctl --no-legend list-users | awk '{print $2;}'`
+home_dir := env_var('HOME')
+
+default:
+    @just --choose
+
+china-mirror:
+    #!/usr/bin/env bash
+    sed -i "1i Server = https://mirror.sjtu.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
+    sed -i "1i Server = https://mirrors.sustech.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist

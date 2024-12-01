@@ -23,11 +23,6 @@ set -xe
 ### NTP
 timedatectl set-ntp true
 
-### Mirrors
-sed -i "1i Server = https://mirror.sjtu.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
-sed -i "1i Server = https://mirrors.sustech.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
-
-
 ### BootStrap
 pacstrap /mnt base base-devel linux linux-firmware efibootmgr bash-completion git amd-ucode
 echo "Pacstrap Done!"
