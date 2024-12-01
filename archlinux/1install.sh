@@ -17,21 +17,47 @@ mkdir /mnt/efi
 !
 #################################
 
-# print command before executing, and exit when any command fails
-set -xe
+PS3='Please enter your choice: '
 
-### NTP
-timedatectl set-ntp true
+options=(
+    "enable NTP"
+    "change mirror"
+    "BootStrap"
+    "fstab"
+    "cp notes and chroot"
+    "Quit"
+)
 
-### BootStrap
-pacstrap /mnt base base-devel linux linux-firmware efibootmgr bash-completion git amd-ucode
-echo "Pacstrap Done!"
-sleep 3
+select opt in "${options[@]}"
 
-### fstab
-genfstab -U /mnt /mnt/efi >> /mnt/etc/fstab
+do
+    case $opt in
+        "enable NTP")
+            timedatectl set-ntp true
+            ;;
 
+        "change mirror")
+            sed -i "1i Server = https://mirror.sjtu.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
+            sed -i "1i Server = https://mirrors.sustech.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
+            ;;
 
-cp -r notes /mnt
+        "BootStrap")
+            pacstrap /mnt base base-devel linux linux-firmware efibootmgr bash-completion git amd-ucode
+            ;;
 
-arch-chroot /mnt
+        "fstab")
+            genfstab -U /mnt /mnt/efi >> /mnt/etc/fstab
+            ;;
+
+        "cp notes and chroot")
+            cp -r notes /mnt
+            arch-chroot /mnt
+            ;;
+
+        "Quit")
+            break
+            ;;
+
+        *) echo "invalid option $REPLY";;
+    esac
+done
