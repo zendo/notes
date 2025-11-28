@@ -8,10 +8,12 @@ password := "123"
 # station wlan0 get-networks
 # station wlan0 connect SSID
 
+# cfdisk / lsblk
 # mkfs.fat -F32
 # mkfs.btrfs
 # mount
 # mkdir /mnt/efi
+# pacman -Sy git just fzf
 
 _default:
     @just --choose --unsorted
@@ -27,7 +29,7 @@ l2-change-mirrors:
 
 [group('livecd')]
 l3-pacstrap:
-    pacstrap /mnt base base-devel linux linux-firmware efibootmgr bash-completion git just
+    pacstrap /mnt base base-devel linux linux-firmware efibootmgr bash-completion git just fzf
 
 [group('livecd')]
 l4-genfstab:
@@ -35,7 +37,7 @@ l4-genfstab:
 
 [group('livecd')]
 l5-cp-notes-chroot:
-    cp -r notes /mnt
+    cp -r ~/notes /mnt
     arch-chroot /mnt
 
 
@@ -43,7 +45,6 @@ l5-cp-notes-chroot:
 c1-timezone:
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
     hwclock --systohc
-    echo "Timezone done"
 
 [group('chroot')]
 c2-localization:
@@ -53,17 +54,16 @@ c2-localization:
     echo 'LANG=zh_CN.UTF-8' > /etc/locale.conf
     # Using en env temp
     export LANG=en_US.UTF-8
-    echo "Localization done"
 
 [group('chroot')]
 c3-hosts:
+    #!/usr/bin/env bash
     echo "{{ hostname }}" > /etc/hostname
     tee -a /etc/hosts <<EOF
     127.0.0.1  localhost
     ::1  localhost
     127.0.1.1  $hostname
     EOF
-    echo "Hosts done"
 
 [group('chroot')]
 c4-core-apps:
@@ -74,38 +74,46 @@ c4-core-apps:
     systemctl enable dhcpcd.service
     systemctl enable NetworkManager.service
     systemctl enable systemd-timesyncd.service
-    echo "Apps and services done"
 
 [group('chroot')]
 c5-grub:
     grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
     grub-mkconfig -o /boot/grub/grub.cfg
-    sleep 3
-    echo "Grub done"
 
 [group('chroot')]
 c6-useradd:
-    echo "root:$password" | chpasswd
-    useradd -m -G wheel $username
-    echo "$username:$password" | chpasswd
+    #!/usr/bin/env bash
+    echo "root:{{ password }}" | chpasswd
+    useradd -m -G wheel "{{ username }}"
+    echo "{{ username }}:{{ password }}" | chpasswd
     tee -a /etc/sudoers <<EOF
     %wheel  ALL=(ALL:ALL)   NOPASSWD:SETENV: ALL
     EOF
-    echo "Now exit chroot and reboot!"
 
 
 [group('post')]
 archlcn-repo:
-    export LANG=en_US.UTF-8  # Using en temp
+    #!/usr/bin/env bash
     sudo tee -a /etc/pacman.conf <<EOF
     [archlinuxcn]
     Server = https://repo.archlinuxcn.org/\$arch
     EOF
-    echo "Archlinuxcn done"
+    sudo pacman -Syy && sudo pacman -S --noconfirm archlinuxcn-keyring
+
+[group('post')]
+apps:
+    sudo pacman -S --noconfirm wayland libinput a52dec libmad \
+                   man-pages-zh_cn firefox-i18n-zh-cn \
+                   paru pamac flatpak
+
+[group('post')]
+fonts:
+    sudo pacman -S ttf-hack ttf-jetbrains-mono ttf-maplemono \
+                   ttf-noto-sans-cjk-vf ttf-noto-serif-cjk-vf
 
 [group('post')]
 gnome:
-    sudo pacman -S gnome gnome-tweaks seahorse \
+    sudo pacman -S gnome seahorse refine \
          gnome-browser-connector gnome-power-manager
     sudo systemctl enable gdm.service
 
@@ -121,12 +129,12 @@ fcitx:
 
 [group('post')]
 amd:
-    sudo pacman -S --noconfirm amd-ucode mesa lib32-mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon
+    sudo pacman -S --noconfirm amd-ucode mesa xf86-video-amdgpu vulkan-radeon
 
 [group('post')]
 intel:
-    pacman -S --noconfirm intel-ucode mesa lib32-mesa vulkan-intel lib32-vulkan-intel
+    pacman -S --noconfirm intel-ucode mesa vulkan-intel
 
 [group('post')]
 nvidia:
-    sudo pacman -S --noconfirm nvidia-open nvidia-settings lib32-nvidia-utils
+    sudo pacman -S --noconfirm nvidia-open nvidia-settings
