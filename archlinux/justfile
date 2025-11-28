@@ -9,16 +9,24 @@ password := "123"
 # station wlan0 connect SSID
 
 # cfdisk / lsblk
-# mkfs.fat -F32
-# mkfs.btrfs
-# mount
-# mkdir /mnt/efi
-# pacman -Sy git just fzf
+# pacman -Sy git just fzf micro
 
 _default:
     @just --choose --unsorted
 
 [group('livecd')]
+l0-partition:
+    #!/usr/bin/env bash
+    parted /dev/vda mklabel gpt
+    parted /dev/vda mkpart ESP fat32 1MiB 513MiB
+    parted /dev/vda set 1 boot on
+    parted /dev/vda mkpart primary btrfs 513MiB 100%
+    mkfs.fat -F32 /dev/vda1
+    mkfs.btrfs -f /dev/vda2
+    mount /dev/vda2 /mnt
+    mkdir /mnt/efi
+    mount /dev/vda1 /mnt/efi
+
 l1-enable-NTP:
     timedatectl set-ntp true
 
@@ -52,8 +60,6 @@ c2-localization:
     echo 'zh_CN.UTF-8 UTF-8' >> /etc/locale.gen
     locale-gen
     echo 'LANG=zh_CN.UTF-8' > /etc/locale.conf
-    # Using en env temp
-    export LANG=en_US.UTF-8
 
 [group('chroot')]
 c3-hosts:
@@ -62,26 +68,21 @@ c3-hosts:
     tee -a /etc/hosts <<EOF
     127.0.0.1  localhost
     ::1  localhost
-    127.0.1.1  $hostname
+    127.0.1.1  {{ hostname }}
     EOF
 
 [group('chroot')]
 c4-core-apps:
     pacman -S mesa dhcpcd netctl iw dialog wpa_supplicant \
               networkmanager bind-tools net-tools dosfstools \
-              ntfs-3g btrfs-progs os-prober grub sudo vi nano \
+              ntfs-3g btrfs-progs sudo micro \
               wget curl expac zsh
     systemctl enable dhcpcd.service
     systemctl enable NetworkManager.service
     systemctl enable systemd-timesyncd.service
 
 [group('chroot')]
-c5-grub:
-    grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
-    grub-mkconfig -o /boot/grub/grub.cfg
-
-[group('chroot')]
-c6-useradd:
+c5-useradd:
     #!/usr/bin/env bash
     echo "root:{{ password }}" | chpasswd
     useradd -m -G wheel "{{ username }}"
@@ -89,6 +90,69 @@ c6-useradd:
     tee -a /etc/sudoers <<EOF
     %wheel  ALL=(ALL:ALL)   NOPASSWD:SETENV: ALL
     EOF
+
+[group('chroot')]
+grub:
+    pacman -S --noconfirm grub os-prober
+    grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+    grub-mkconfig -o /boot/grub/grub.cfg
+
+[group('chroot')]
+c5-systemd-boot:
+    #!/usr/bin/env bash
+    bootctl --path=/efi install
+
+    mkdir -p /efi/loader
+    tee /efi/loader/loader.conf <<EOF
+    default arch.conf
+    timeout 5
+    console-mode keep
+    editor yes
+    EOF
+
+    mkdir -p /efi/loader/entries
+    tee /efi/loader/entries/arch.conf <<EOF
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /initramfs-linux.img
+    options root=UUID=$(blkid -s UUID -o value /dev/sda2) rw quiet
+    EOF
+
+    tee /efi/loader/entries/arch-fallback.conf <<EOF
+    title Arch Linux (fallback)
+    linux /vmlinuz-linux
+    initrd /initramfs-linux-fallback.img
+    options root=UUID=$(blkid -s UUID -o value /dev/sda2) rw quiet
+    EOF
+
+    bootctl --path=/efi update
+
+[group('chroot')]
+limine:
+    #!/usr/bin/env bash
+    pacman -S --noconfirm limine
+    limine-install /efi
+    mkdir -p /boot/limine
+
+    tee /boot/limine/limine.cfg <<EOF
+    TIMEOUT=5
+    EDITOR_ENABLED=yes
+    VERBOSE=yes
+
+    :Arch Linux
+        PROTOCOL=linux
+        KERNEL_PATH=boot:///vmlinuz-linux
+        MODULE_PATH=boot:///initramfs-linux.img
+        CMDLINE=root=UUID=$(blkid -s UUID -o value /dev/sda2) rw quiet
+
+    :Arch Linux (fallback)
+        PROTOCOL=linux
+        KERNEL_PATH=boot:///vmlinuz-linux
+        MODULE_PATH=boot:///initramfs-linux-fallback.img
+        CMDLINE=root=UUID=$(blkid -s UUID -o value /dev/sda2) rw quiet
+    EOF
+
+    cp /usr/share/limine/limine.efi /efi/EFI/limine/
 
 
 [group('post')]
