@@ -26,7 +26,8 @@ OPTIONS=(1 "Debloat System"
          6 "Installing Extras"
          7 "Install Nvidia - Install akmod nvidia drivers"
          8 "Disable SElinux - Reboot need"
-         9 "Quit")
+         9 "Enable Terra repo"
+         10 "Quit")
 
 while [ "$CHOICE -ne 4" ]; do
     CHOICE=$(dialog --clear \
@@ -92,7 +93,12 @@ while [ "$CHOICE -ne 4" ]; do
             notify-send "All done" --expire-time=10
             ;;
 
-        9)
+        9) echo "Enable Terra repo"
+           # https://terra.fyralabs.com/
+           sudo dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
+           ;;
+
+        10)
             exit 0
             ;;
     esac
