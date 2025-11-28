@@ -14,6 +14,8 @@ password := "123"
 _default:
     @just --choose --unsorted
 
+# ==================== LiveCD 环境阶段 ====================
+
 [group('livecd')]
 l0-partition:
     #!/usr/bin/env bash
@@ -27,6 +29,7 @@ l0-partition:
     mkdir /mnt/efi
     mount /dev/vda1 /mnt/efi
 
+[group('livecd')]
 l1-enable-NTP:
     timedatectl set-ntp true
 
@@ -37,7 +40,7 @@ l2-change-mirrors:
 
 [group('livecd')]
 l3-pacstrap:
-    pacstrap /mnt base base-devel linux linux-firmware efibootmgr bash-completion git just fzf
+    pacstrap /mnt base base-devel linux linux-firmware efibootmgr bash-completion git just fzf micro
 
 [group('livecd')]
 l4-genfstab:
@@ -48,6 +51,7 @@ l5-cp-notes-chroot:
     cp -r ~/notes /mnt
     arch-chroot /mnt
 
+# ==================== Chroot 环境阶段 ====================
 
 [group('chroot')]
 c1-timezone:
@@ -66,8 +70,6 @@ c3-hosts:
     #!/usr/bin/env bash
     echo "{{ hostname }}" > /etc/hostname
     tee -a /etc/hosts <<EOF
-    127.0.0.1  localhost
-    ::1  localhost
     127.0.1.1  {{ hostname }}
     EOF
 
@@ -92,71 +94,15 @@ c5-useradd:
     EOF
 
 [group('chroot')]
-grub:
+c6-grub:
     pacman -S --noconfirm grub os-prober
     grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
     grub-mkconfig -o /boot/grub/grub.cfg
 
-[group('chroot')]
-c5-systemd-boot:
-    #!/usr/bin/env bash
-    bootctl --path=/efi install
-
-    mkdir -p /efi/loader
-    tee /efi/loader/loader.conf <<EOF
-    default arch.conf
-    timeout 5
-    console-mode keep
-    editor yes
-    EOF
-
-    mkdir -p /efi/loader/entries
-    tee /efi/loader/entries/arch.conf <<EOF
-    title Arch Linux
-    linux /vmlinuz-linux
-    initrd /initramfs-linux.img
-    options root=UUID=$(blkid -s UUID -o value /dev/sda2) rw quiet
-    EOF
-
-    tee /efi/loader/entries/arch-fallback.conf <<EOF
-    title Arch Linux (fallback)
-    linux /vmlinuz-linux
-    initrd /initramfs-linux-fallback.img
-    options root=UUID=$(blkid -s UUID -o value /dev/sda2) rw quiet
-    EOF
-
-    bootctl --path=/efi update
-
-[group('chroot')]
-limine:
-    #!/usr/bin/env bash
-    pacman -S --noconfirm limine
-    limine-install /efi
-    mkdir -p /boot/limine
-
-    tee /boot/limine/limine.cfg <<EOF
-    TIMEOUT=5
-    EDITOR_ENABLED=yes
-    VERBOSE=yes
-
-    :Arch Linux
-        PROTOCOL=linux
-        KERNEL_PATH=boot:///vmlinuz-linux
-        MODULE_PATH=boot:///initramfs-linux.img
-        CMDLINE=root=UUID=$(blkid -s UUID -o value /dev/sda2) rw quiet
-
-    :Arch Linux (fallback)
-        PROTOCOL=linux
-        KERNEL_PATH=boot:///vmlinuz-linux
-        MODULE_PATH=boot:///initramfs-linux-fallback.img
-        CMDLINE=root=UUID=$(blkid -s UUID -o value /dev/sda2) rw quiet
-    EOF
-
-    cp /usr/share/limine/limine.efi /efi/EFI/limine/
-
+# ==================== 重启后配置阶段 ====================
 
 [group('post')]
-archlcn-repo:
+archlinuxcn-repo:
     #!/usr/bin/env bash
     sudo tee -a /etc/pacman.conf <<EOF
     [archlinuxcn]
@@ -197,8 +143,12 @@ amd:
 
 [group('post')]
 intel:
-    pacman -S --noconfirm intel-ucode mesa vulkan-intel
+    sudo pacman -S --noconfirm intel-ucode mesa vulkan-intel
 
 [group('post')]
 nvidia:
     sudo pacman -S --noconfirm nvidia-open nvidia-settings
+
+[group('post')]
+virt-guset:
+    sudo pacman -S spice-vdagent
